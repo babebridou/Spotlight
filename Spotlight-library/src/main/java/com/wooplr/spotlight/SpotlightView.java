@@ -14,6 +14,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,12 +34,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wooplr.spotlight.prefs.PreferencesManager;
 import com.wooplr.spotlight.shape.Circle;
 import com.wooplr.spotlight.shape.NormalLineAnimDrawable;
 import com.wooplr.spotlight.target.AnimPoint;
+import com.wooplr.spotlight.target.SmallCircleViewTarget;
 import com.wooplr.spotlight.target.Target;
 import com.wooplr.spotlight.target.ViewTarget;
 import com.wooplr.spotlight.utils.SpotlightListener;
@@ -145,6 +148,8 @@ public class SpotlightView extends FrameLayout {
      */
     private TextView subHeadingTv, headingTv;
 
+    private ImageView subHeadingIv;
+
     /**
      * Whether to show the arc at the end of the line that points to the target.
      */
@@ -179,6 +184,8 @@ public class SpotlightView extends FrameLayout {
 
 
     private Typeface mTypeface = null;
+
+    private Drawable subHeadingDrawable;
 
 
     public SpotlightView(Context context) {
@@ -571,6 +578,10 @@ public class SpotlightView extends FrameLayout {
         subHeadingTv.setVisibility(View.GONE);
         subHeadingTv.setText(subHeadingTvText);
 
+        subHeadingIv = new ImageView(activity);
+        subHeadingIv.setImageDrawable(subHeadingDrawable);
+        subHeadingIv.setVisibility(View.GONE);
+
         //Line animation
         Paint p = new Paint();
         p.setAntiAlias(true);
@@ -623,8 +634,10 @@ public class SpotlightView extends FrameLayout {
                 fadeIn.setFillAfter(true);
                 headingTv.startAnimation(fadeIn);
                 subHeadingTv.startAnimation(fadeIn);
+                subHeadingIv.startAnimation(fadeIn);
                 headingTv.setVisibility(View.VISIBLE);
                 subHeadingTv.setVisibility(View.VISIBLE);
+                subHeadingIv.setVisibility(View.VISIBLE);
 
             }
 
@@ -778,6 +791,7 @@ public class SpotlightView extends FrameLayout {
 
         addView(headingTv, headingParams);
         addView(subHeadingTv, subHeadingParams);
+        addView(subHeadingIv, subHeadingParams);
 
         return animPoints;
     }
@@ -888,6 +902,10 @@ public class SpotlightView extends FrameLayout {
         this.subHeadingTvText = subHeadingTvText;
     }
 
+    public void setSubHeadingDrawable(Drawable subHeadingDrawable){
+        this.subHeadingDrawable = subHeadingDrawable;
+    }
+
     public void setLineAnimationDuration(long lineAnimationDuration) {
         this.lineAnimationDuration = lineAnimationDuration;
     }
@@ -925,6 +943,9 @@ public class SpotlightView extends FrameLayout {
             this.subHeadingTvSize = configuration.getSubHeadingTvSize();
             this.subHeadingTvColor = configuration.getSubHeadingTvColor();
             this.subHeadingTvText = configuration.getSubHeadingTvText();
+
+            //// FIXME: 29/09/2016
+
             this.lineAnimationDuration = configuration.getLineAnimationDuration();
             this.lineStroke = configuration.getLineStroke();
             this.lineAndArcColor = configuration.getLineAndArcColor();
@@ -966,6 +987,11 @@ public class SpotlightView extends FrameLayout {
             spotlightView.setTargetView(new ViewTarget(view));
             return this;
         }
+        public Builder target(View view, SmallCircleViewTarget.Mode mode) {
+            spotlightView.setTargetView(new SmallCircleViewTarget(view, mode));
+            return this;
+        }
+
         public Builder target(Target target) {
             spotlightView.setTargetView(target);
             return this;
@@ -1040,6 +1066,10 @@ public class SpotlightView extends FrameLayout {
 
         public Builder subHeadingTvText(CharSequence text) {
             spotlightView.setSubHeadingTvText(text);
+            return this;
+        }
+        public Builder subHeadingDrawable(Drawable drawable){
+            spotlightView.setSubHeadingDrawable(drawable);
             return this;
         }
 

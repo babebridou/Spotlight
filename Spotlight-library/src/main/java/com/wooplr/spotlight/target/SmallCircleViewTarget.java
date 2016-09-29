@@ -2,6 +2,7 @@ package com.wooplr.spotlight.target;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -10,18 +11,41 @@ import android.view.View;
 public class SmallCircleViewTarget implements Target {
 
     private View view;
-    private double width;
-    private double height;
-    private double offsetX;
-    private double offsetY;
+    private double minX;
+    private double minY;
+    private double maxX;
+    private double maxY;
+
+    public enum Mode{
+        HorizontalLeader,
+        Normal
+    }
 
 
-    public SmallCircleViewTarget(View view, double width, double height, double offsetX, double offsetY) {
+    public SmallCircleViewTarget(View view, Mode mode){
         this.view = view;
-        this.width = width;
-        this.height = height;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        switch(mode){
+            case HorizontalLeader:
+                this.minX = 0d;
+                this.minY = 0d;
+                this.maxX = 0.5d;
+                this.maxY = 1d;
+                break;
+            default:
+                this.minX = 0d;
+                this.minY = 0d;
+                this.maxX = 1d;
+                this.maxY = 1d;
+                break;
+        }
+    }
+
+    public SmallCircleViewTarget(View view, double minX, double minY, double maxX, double maxY) {
+        this.view = view;
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
     }
 
     @Override
@@ -29,13 +53,17 @@ public class SmallCircleViewTarget implements Target {
 
         int[] location = new int[2];
         view.getLocationInWindow(location);
-        int minX = location[0];
-        int maxX = location[0]+view.getWidth();
-        int minY = location[1];
-        int maxY = location[1]+view.getHeight();
-        int x = (int)((double)minX+(double)(maxX-minX)*offsetX);
-        int y = (int)((double)minY+(double)(maxY-minY)*offsetY);
-        return new Point(x,y);
+        double xLeft = location[0];
+        double yUp = location[1];
+        double viewWidth = view.getWidth();
+        double viewHeight = view.getHeight();
+        double realXmin = xLeft+minX*viewWidth;
+        double realYmin = yUp +minY*viewHeight;
+        double realXmax = xLeft+maxX*viewWidth;
+        double realYmax = yUp + maxY*viewHeight;
+        double x = (realXmin+realXmax)/2.0d;
+        double y = (realYmin+realYmax)/2.0d;
+        return new Point((int)x,(int)y);
     }
 
     @Override
@@ -43,21 +71,34 @@ public class SmallCircleViewTarget implements Target {
         int[] location = new int[2];
         view.getLocationInWindow(location);
 
-        int minX = location[0];
-        int maxX = location[0]+view.getWidth();
-        int minY = location[1];
-        int maxY = location[1]+view.getHeight();
-        int x = (int)((double)minX+(double)(maxX-minX)*offsetX);
-        int y = (int)((double)minY+(double)(maxY-minY)*offsetY);
+        double xLeft = location[0];
+        double yUp = location[1];
+        double viewWidth = view.getWidth();
+        double viewHeight = view.getHeight();
+        double realXmin = xLeft+minX*viewWidth;
+        double realYmin = yUp +minY*viewHeight;
+        double realXmax = xLeft+maxX*viewWidth;
+        double realYmax = yUp + maxY*viewHeight;
 
-        int halfRectWidth = (int)((double)view.getWidth()*width/2d);
-        int halfRectHeight = (int)((double)view.getHeight()*height/2d);
+        Log.d("SmallCircleViewTarget", "minX "+minX);
+        Log.d("SmallCircleViewTarget", "minY "+minY);
+        Log.d("SmallCircleViewTarget", "maxX "+maxX);
+        Log.d("SmallCircleViewTarget", "maxY "+maxY);
+        Log.d("SmallCircleViewTarget", "viewWidth "+viewWidth);
+        Log.d("SmallCircleViewTarget", "viewHeight "+viewHeight);
+        Log.d("SmallCircleViewTarget", "xLeft "+xLeft);
+        Log.d("SmallCircleViewTarget", "yUp "+yUp);
+        Log.d("SmallCircleViewTarget", "realXmin "+realXmin);
+        Log.d("SmallCircleViewTarget", "realYmin "+realYmin);
+        Log.d("SmallCircleViewTarget", "realXmax "+realXmax);
+        Log.d("SmallCircleViewTarget", "realYmax "+realYmax);
+
 
         return new Rect(
-                x-halfRectWidth,
-                y-halfRectHeight,
-                x+halfRectWidth,
-                x+halfRectHeight
+                (int)realXmin,
+                (int)realYmin,
+                (int)realXmax,
+                (int)realYmax
         );
     }
 

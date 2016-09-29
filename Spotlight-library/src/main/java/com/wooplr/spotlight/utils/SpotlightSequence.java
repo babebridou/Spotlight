@@ -14,7 +14,9 @@ import android.view.View;
 
 import com.wooplr.spotlight.SpotlightConfig;
 import com.wooplr.spotlight.SpotlightView;
+import com.wooplr.spotlight.target.Target;
 import com.wooplr.spotlight.prefs.PreferencesManager;
+import com.wooplr.spotlight.target.SmallCircleViewTarget;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -88,12 +90,124 @@ public class SpotlightSequence {
     /**
      * Adds a new SpotlightView.Builder object to {@link this.queue}
      * @param target View where the spotlight will focus
+     * @param mode circle position in the view
+     * @param title Spotlight title
+     * @param subtitle Spotlight subtitle
+     *                 * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
+     * @return SpotlightSequence instance
+     */
+    public SpotlightSequence addSpotlight(View target, SmallCircleViewTarget.Mode mode, String title, String subtitle, String usageId){
+        Log.d(TAG, "Adding " + usageId);
+        SpotlightView.Builder builder = new SpotlightView.Builder(activity)
+                .setConfiguration(config)
+                .headingTvText(title)
+                .usageId(usageId)
+                .subHeadingTvText(subtitle)
+                .target(target, mode)
+                .setListener(new SpotlightListener() {
+                    @Override
+                    public void onUserClicked(String s) {
+                        playNext();
+                    }
+                })
+                .enableDismissAfterShown(true);
+        queue.add(builder);
+        return instance;
+    }
+
+    /**
+     * Adds a new SpotlightView.Builder object to {@link this.queue}
+     * @param target View where the spotlight will focus
+     * @param title Spotlight title
+     * @param subtitle Spotlight subtitle
+     *                 * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
+     * @return SpotlightSequence instance
+     */
+    public SpotlightSequence addSpotlight(Target target, String title, String subtitle, String usageId){
+        Log.d(TAG, "Adding " + usageId);
+        SpotlightView.Builder builder = new SpotlightView.Builder(activity)
+                .setConfiguration(config)
+                .headingTvText(title)
+                .usageId(usageId)
+                .subHeadingTvText(subtitle)
+                .target(target)
+                .setListener(new SpotlightListener() {
+                    @Override
+                    public void onUserClicked(String s) {
+                        playNext();
+                    }
+                })
+                .enableDismissAfterShown(true);
+        queue.add(builder);
+        return instance;
+    }
+
+    /**
+     * Adds a new SpotlightView.Builder object to {@link this.queue}
+     * @param target View where the spotlight will focus
      * @param titleResId Spotlight title
      * @param subTitleResId Spotlight subtitle
      * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
      * @return SpotlightSequence instance
      */
     public SpotlightSequence addSpotlight(@NonNull View target, int titleResId, int subTitleResId, String usageId){
+        String title = activity.getString(titleResId);
+        String subtitle = activity.getString(subTitleResId);
+        SpotlightView.Builder builder = new SpotlightView.Builder(activity)
+                .setConfiguration(config)
+                .headingTvText(title)
+                .usageId(usageId)
+                .subHeadingTvText(subtitle)
+                .target(target)
+                .setListener(new SpotlightListener() {
+                    @Override
+                    public void onUserClicked(String s) {
+                        playNext();
+                    }
+                })
+                .enableDismissAfterShown(true);
+        queue.add(builder);
+        return instance;
+    }
+
+    /**
+     * Adds a new SpotlightView.Builder object to {@link this.queue}
+     * @param target View where the spotlight will focus
+     * @param mode circle position in the view
+     * @param titleResId Spotlight title
+     * @param subTitleResId Spotlight subtitle
+     * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
+     * @return SpotlightSequence instance
+     */
+    public SpotlightSequence addSpotlight(@NonNull View target, SmallCircleViewTarget.Mode mode, int titleResId, int subTitleResId, String usageId){
+        String title = activity.getString(titleResId);
+        String subtitle = activity.getString(subTitleResId);
+        SpotlightView.Builder builder = new SpotlightView.Builder(activity)
+                .setConfiguration(config)
+                .headingTvText(title)
+                .usageId(usageId)
+                .subHeadingTvText(subtitle)
+                .target(target, mode)
+                .setListener(new SpotlightListener() {
+                    @Override
+                    public void onUserClicked(String s) {
+                        playNext();
+                    }
+                })
+                .enableDismissAfterShown(true);
+        queue.add(builder);
+        return instance;
+    }
+
+    /**
+     * Adds a new SpotlightView.Builder object to {@link this.queue}
+     * @param target Target where the spotlight will focus
+     * @param titleResId Spotlight title
+     * @param subTitleResId Spotlight subtitle
+     * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
+     * @return SpotlightSequence instance
+     */
+    public SpotlightSequence addSpotlight(@NonNull Target target, int titleResId, int subTitleResId, String usageId){
         String title = activity.getString(titleResId);
         String subtitle = activity.getString(subTitleResId);
         SpotlightView.Builder builder = new SpotlightView.Builder(activity)
