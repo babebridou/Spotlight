@@ -88,12 +88,12 @@ public class SmallCircleViewTarget implements Target {
 
     @Override
     public int getViewWidth() {
-        return view.getWidth();
+        return getRect().width();
     }
 
     @Override
     public int getViewHeight() {
-        return view.getHeight();
+        return getRect().height();
     }
 
 }
