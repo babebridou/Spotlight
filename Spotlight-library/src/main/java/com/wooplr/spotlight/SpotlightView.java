@@ -966,6 +966,10 @@ public class SpotlightView extends FrameLayout {
             spotlightView.setTargetView(new ViewTarget(view));
             return this;
         }
+        public Builder target(Target target) {
+            spotlightView.setTargetView(target);
+            return this;
+        }
 
         public Builder targetPadding(int padding) {
             spotlightView.setPadding(padding);
