@@ -51,7 +51,7 @@ public class SmallCircleViewTarget implements Target {
         int y = (int)((double)minY+(double)(maxY-minY)*offsetY);
 
         int halfRectWidth = (int)((double)view.getWidth()*width/2d);
-        int halfRectHeight = (int)((double)view.getHeight()*width/2d);
+        int halfRectHeight = (int)((double)view.getHeight()*height/2d);
 
         return new Rect(
                 x-halfRectWidth,
@@ -95,4 +95,5 @@ public class SmallCircleViewTarget implements Target {
     public int getViewHeight() {
         return view.getHeight();
     }
+
 }
