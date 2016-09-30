@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         config.setSubHeadingTvSize(16);
 
                         SpotlightSequence.getInstance(MainActivity.this,config)
-                                .addSpotlight(switchAnimation, SpotlightView.TargetMode.SmallCenter, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
+                                .addSpotlight(switchAnimation, SpotlightView.TargetMode.HorizontalLeader, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
                                 .addSpotlight(reset, SpotlightView.TargetMode.SmallCenter, "Reset ", "Click here to reset preferences", INTRO_RESET)
                                 .addSpotlight(resetAndPlay, SpotlightView.TargetMode.SmallCenter, "Play Again", "Click here to play again", INTRO_REPEAT)
                                 .addSpotlight(changePosAndPlay, "Change Position", "Click here to change position and replay", INTRO_CHANGE_POSITION)

@@ -24,7 +24,7 @@ public class SmallCircleViewTarget implements Target {
             case HorizontalLeader:
                 this.minX = 0d;
                 this.minY = 0d;
-                this.maxX = 0.5d;
+                this.maxX = 0.3d;
                 this.maxY = 1d;
                 break;
             case SmallCenter:
