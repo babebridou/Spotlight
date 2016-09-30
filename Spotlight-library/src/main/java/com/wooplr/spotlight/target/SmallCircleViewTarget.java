@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
 
+import com.wooplr.spotlight.SpotlightView;
+
 /**
  * Created by jitender on 10/06/16.
  */
@@ -16,13 +18,7 @@ public class SmallCircleViewTarget implements Target {
     private double maxX;
     private double maxY;
 
-    public enum Mode{
-        HorizontalLeader,
-        Normal
-    }
-
-
-    public SmallCircleViewTarget(View view, Mode mode){
+    public SmallCircleViewTarget(View view, SpotlightView.TargetMode mode){
         this.view = view;
         switch(mode){
             case HorizontalLeader:
@@ -30,6 +26,12 @@ public class SmallCircleViewTarget implements Target {
                 this.minY = 0d;
                 this.maxX = 0.5d;
                 this.maxY = 1d;
+                break;
+            case SmallCenter:
+                this.minX = 0.3d;
+                this.minY = 0.3d;
+                this.maxX = 0.7d;
+                this.maxY = 0.7d;
                 break;
             default:
                 this.minX = 0d;
@@ -80,7 +82,7 @@ public class SmallCircleViewTarget implements Target {
         double realXmax = xLeft+maxX*viewWidth;
         double realYmax = yUp + maxY*viewHeight;
 
-        Log.d("SmallCircleViewTarget", "minX "+minX);
+/*        Log.d("SmallCircleViewTarget", "minX "+minX);
         Log.d("SmallCircleViewTarget", "minY "+minY);
         Log.d("SmallCircleViewTarget", "maxX "+maxX);
         Log.d("SmallCircleViewTarget", "maxY "+maxY);
@@ -91,7 +93,7 @@ public class SmallCircleViewTarget implements Target {
         Log.d("SmallCircleViewTarget", "realXmin "+realXmin);
         Log.d("SmallCircleViewTarget", "realYmin "+realYmin);
         Log.d("SmallCircleViewTarget", "realXmax "+realXmax);
-        Log.d("SmallCircleViewTarget", "realYmax "+realYmax);
+        Log.d("SmallCircleViewTarget", "realYmax "+realYmax);*/
 
 
         return new Rect(

@@ -96,7 +96,7 @@ public class SpotlightSequence {
      *                 * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
      * @return SpotlightSequence instance
      */
-    public SpotlightSequence addSpotlight(View target, SmallCircleViewTarget.Mode mode, String title, String subtitle, String usageId){
+    public SpotlightSequence addSpotlight(View target, SpotlightView.TargetMode mode, String title, String subtitle, String usageId){
         Log.d(TAG, "Adding " + usageId);
         SpotlightView.Builder builder = new SpotlightView.Builder(activity)
                 .setConfiguration(config)
@@ -179,7 +179,7 @@ public class SpotlightSequence {
      * @param usageId id used to store the SpotlightView in {@link PreferencesManager}
      * @return SpotlightSequence instance
      */
-    public SpotlightSequence addSpotlight(@NonNull View target, SmallCircleViewTarget.Mode mode, int titleResId, int subTitleResId, String usageId){
+    public SpotlightSequence addSpotlight(@NonNull View target, SpotlightView.TargetMode mode, int titleResId, int subTitleResId, String usageId){
         String title = activity.getString(titleResId);
         String subtitle = activity.getString(subTitleResId);
         SpotlightView.Builder builder = new SpotlightView.Builder(activity)

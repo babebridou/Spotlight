@@ -56,6 +56,12 @@ import java.util.List;
 
 public class SpotlightView extends FrameLayout {
 
+    public enum TargetMode{
+        HorizontalLeader,
+        SmallCenter,
+        Normal
+    }
+
     /**
      * OverLay color
      */
@@ -987,7 +993,7 @@ public class SpotlightView extends FrameLayout {
             spotlightView.setTargetView(new ViewTarget(view));
             return this;
         }
-        public Builder target(View view, SmallCircleViewTarget.Mode mode) {
+        public Builder target(View view, TargetMode mode) {
             spotlightView.setTargetView(new SmallCircleViewTarget(view, mode));
             return this;
         }
