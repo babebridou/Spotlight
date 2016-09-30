@@ -1,6 +1,7 @@
 package com.example.spotlight;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wooplr.spotlight.SpotlightConfig;
 import com.wooplr.spotlight.SpotlightView;
 import com.wooplr.spotlight.prefs.PreferencesManager;
+import com.wooplr.spotlight.target.SmallCircleViewTarget;
 import com.wooplr.spotlight.utils.SpotlightSequence;
 import com.wooplr.spotlight.utils.Utils;
 
@@ -24,8 +27,6 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-
 
 //    static {
 //        AppCompatDelegate.setCompatVectorFromSourcesEnabled(true);
@@ -125,10 +126,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        SpotlightSequence.getInstance(MainActivity.this,null)
-                                .addSpotlight(switchAnimation, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
-                                .addSpotlight(reset, "Reset ", "Click here to reset preferences", INTRO_RESET)
-                                .addSpotlight(resetAndPlay, "Play Again", "Click here to play again", INTRO_REPEAT)
+                        SpotlightConfig config = new SpotlightConfig();
+                        config.setDismissOnBackpress(true);
+                        config.setDismissOnTouch(true);
+                        config.setFadingTextDuration(400);
+                        config.setIntroAnimationDuration(400);
+                        config.setRevealAnimationEnabled(true);
+                        config.setHeadingTvColor(Color.parseColor("#82be00"));
+                        config.setHeadingTvSize(32);
+                        config.setLineAndArcColor(Color.parseColor("#82be00"));
+                        config.setLineAnimationDuration(400);
+                        config.setLineStroke(Utils.dpToPx(4));
+                        config.setShowTargetArc(true);
+                        config.setMaskColor(Color.parseColor("#bb000000"));
+                        config.setPadding(20);
+                        config.setPerformClick(false);
+                        config.setSubHeadingTvColor(Color.parseColor("#f2feff"));
+                        config.setSubHeadingTvSize(16);
+
+                        SpotlightSequence.getInstance(MainActivity.this,config)
+                                .addSpotlight(switchAnimation, SpotlightView.TargetMode.SmallCenter, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
+                                .addSpotlight(reset, SpotlightView.TargetMode.SmallCenter, "Reset ", "Click here to reset preferences", INTRO_RESET)
+                                .addSpotlight(resetAndPlay, SpotlightView.TargetMode.SmallCenter, "Play Again", "Click here to play again", INTRO_REPEAT)
                                 .addSpotlight(changePosAndPlay, "Change Position", "Click here to change position and replay", INTRO_CHANGE_POSITION)
                                 .addSpotlight(startSequence, "Start sequence", "Well.. you just clicked here", INTRO_SEQUENCE)
                                 .addSpotlight(fab,"Love", "Like the picture?\n" + "Let others know.", INTRO_CARD)
@@ -140,26 +159,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showIntro(View view, String usageId) {
+
+
+        Drawable testDrawable = this.getResources().getDrawable(android.R.drawable.ic_btn_speak_now);
+
         new SpotlightView.Builder(this)
                 .introAnimationDuration(400)
                 .enableRevealAnimation(isRevealEnabled)
                 .performClick(true)
                 .fadeinTextDuration(400)
                 //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
-                .headingTvColor(Color.parseColor("#eb273f"))
+                //.headingTvColor(Color.parseColor("#eb273f"))
+                .headingTvColor(Color.parseColor("#82be00"))
                 .headingTvSize(32)
                 .headingTvText("Love")
-                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvColor(Color.parseColor("#f2feff"))
                 .subHeadingTvSize(16)
                 .subHeadingTvText("Like the picture?\nLet others know.")
-                .maskColor(Color.parseColor("#dc000000"))
-                .target(view)
+                .maskColor(Color.parseColor("#bb000000"))
+                .target(view, SpotlightView.TargetMode.Normal)
                 .lineAnimDuration(400)
-                .lineAndArcColor(Color.parseColor("#eb273f"))
+                //.lineAndArcColor(Color.parseColor("#eb273f"))
+                .lineAndArcColor(Color.parseColor("#82be00"))
                 .dismissOnTouch(true)
                 .dismissOnBackPress(true)
                 .enableDismissAfterShown(true)
                 .usageId(usageId) //UNIQUE ID
+                //.subHeadingDrawable(testDrawable)
                 .show();
     }
 }
