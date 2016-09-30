@@ -388,11 +388,11 @@ public class SpotlightView extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (showTargetArc) {
-                    addArcAnimation(activity);
-                } else {
+//                if (showTargetArc) {
+//                    addArcAnimation(activity);
+//                } else {
                     addPathAnimation(activity);
-                }
+//                }
             }
 
             @Override
@@ -460,11 +460,11 @@ public class SpotlightView extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (showTargetArc) {
-                    addArcAnimation(activity);
-                } else {
+//                if (showTargetArc) {
+//                    addArcAnimation(activity);
+//                } else {
                     addPathAnimation(activity);
-                }
+//                }
             }
 
             @Override

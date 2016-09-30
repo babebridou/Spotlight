@@ -129,13 +129,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SpotlightConfig config = new SpotlightConfig();
                         config.setDismissOnBackpress(true);
                         config.setDismissOnTouch(true);
-                        config.setFadingTextDuration(400);
-                        config.setIntroAnimationDuration(400);
+                        config.setFadingTextDuration(200);
+                        config.setIntroAnimationDuration(200);
                         config.setRevealAnimationEnabled(true);
                         config.setHeadingTvColor(Color.parseColor("#82be00"));
                         config.setHeadingTvSize(32);
                         config.setLineAndArcColor(Color.parseColor("#82be00"));
-                        config.setLineAnimationDuration(400);
+                        config.setLineAnimationDuration(200);
                         config.setLineStroke(Utils.dpToPx(4));
                         config.setShowTargetArc(false);
                         config.setMaskColor(Color.parseColor("#bb000000"));
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         config.setSubHeadingTvColor(Color.parseColor("#f2feff"));
                         config.setSubHeadingTvSize(16);
 
-                        SpotlightSequence.getInstance(MainActivity.this,config)
+                        new SpotlightSequence(MainActivity.this,config)
                                 .addSpotlight(switchAnimation, SpotlightView.TargetMode.NormalRectangle, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
                                 .addSpotlight(reset, SpotlightView.TargetMode.SmallCenter, "Reset ", "Click here to reset preferences", INTRO_RESET)
                                 .addSpotlight(resetAndPlay, SpotlightView.TargetMode.Normal, "Play Again", "Click here to play again", INTRO_REPEAT)

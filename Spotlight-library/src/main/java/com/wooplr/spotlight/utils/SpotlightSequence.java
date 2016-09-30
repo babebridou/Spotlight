@@ -16,7 +16,6 @@ import com.wooplr.spotlight.SpotlightConfig;
 import com.wooplr.spotlight.SpotlightView;
 import com.wooplr.spotlight.target.Target;
 import com.wooplr.spotlight.prefs.PreferencesManager;
-import com.wooplr.spotlight.target.SmallCircleViewTarget;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -31,7 +30,6 @@ public class SpotlightSequence {
     private SpotlightConfig config;
     private Queue<SpotlightView.Builder> queue;
 
-    private static SpotlightSequence instance;
     private final String TAG = "Tour Sequence";
 
     /**
@@ -40,24 +38,11 @@ public class SpotlightSequence {
      * @param activity where this sequence will be executed
      * @param config {@link SpotlightConfig}
      */
-    private SpotlightSequence(Activity activity, SpotlightConfig config){
+    public SpotlightSequence(Activity activity, SpotlightConfig config){
         Log.d(TAG,"NEW TOUR_SEQUENCE INSTANCE");
         this.activity = activity;
         setConfig(config);
         queue = new LinkedList<>();
-    }
-
-    /**
-     * Retriebes the current instance of SpotlightSequence
-     * @param activity where this sequence will be executed
-     * @param config {@link SpotlightConfig}
-     * @return If no instance was found. {@link SpotlightSequence()} will be called.
-     */
-    public static SpotlightSequence getInstance(Activity activity, SpotlightConfig config){
-        if(instance == null){
-            instance = new SpotlightSequence(activity,config);
-        }
-        return instance;
     }
 
     /**
@@ -84,7 +69,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -112,7 +97,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -139,7 +124,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -167,7 +152,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -196,7 +181,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -224,7 +209,7 @@ public class SpotlightSequence {
                 })
                 .enableDismissAfterShown(true);
         queue.add(builder);
-        return instance;
+        return this;
     }
 
     /**
@@ -242,7 +227,6 @@ public class SpotlightSequence {
      * Free variables. Executed when the tour has finished
      */
     private void resetTour() {
-        instance = null;
         queue.clear();
         this.activity = null;
         config = null;
