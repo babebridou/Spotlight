@@ -29,7 +29,7 @@ public class SpotlightSequence {
     private Activity activity;
     private SpotlightConfig config;
     private Queue<SpotlightView.Builder> queue;
-
+    private SequenceFinishedListener sequenceFinishedListener;
     private final String TAG = "Tour Sequence";
 
     /**
@@ -245,7 +245,14 @@ public class SpotlightSequence {
         }else {
             Log.d(TAG, "END OF QUEUE");
             resetTour();
+            if(this.sequenceFinishedListener!=null){
+                this.sequenceFinishedListener.onSequenceFinished();
+            }
         }
+    }
+
+    public void setOnSequenceFinishedListener(SequenceFinishedListener listener){
+        this.sequenceFinishedListener = listener;
     }
 
     /**
@@ -277,6 +284,10 @@ public class SpotlightSequence {
             config.setLineAnimationDuration(400);
         }
         this.config = config;
+    }
+
+    public interface SequenceFinishedListener{
+        public void onSequenceFinished();
     }
 }
 
