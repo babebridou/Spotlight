@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         config.setLineAndArcColor(Color.parseColor("#82be00"));
                         config.setLineAnimationDuration(400);
                         config.setLineStroke(Utils.dpToPx(4));
-                        config.setShowTargetArc(true);
+                        config.setShowTargetArc(false);
                         config.setMaskColor(Color.parseColor("#bb000000"));
                         config.setPadding(20);
                         config.setPerformClick(false);
@@ -145,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         config.setSubHeadingTvSize(16);
 
                         SpotlightSequence.getInstance(MainActivity.this,config)
-                                .addSpotlight(switchAnimation, SpotlightView.TargetMode.HorizontalLeader, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
+                                .addSpotlight(switchAnimation, SpotlightView.TargetMode.NormalRectangle, "Switch Animation", "Click to swtich the animation", INTRO_SWITCH)
                                 .addSpotlight(reset, SpotlightView.TargetMode.SmallCenter, "Reset ", "Click here to reset preferences", INTRO_RESET)
-                                .addSpotlight(resetAndPlay, SpotlightView.TargetMode.SmallCenter, "Play Again", "Click here to play again", INTRO_REPEAT)
+                                .addSpotlight(resetAndPlay, SpotlightView.TargetMode.Normal, "Play Again", "Click here to play again", INTRO_REPEAT)
                                 .addSpotlight(changePosAndPlay, "Change Position", "Click here to change position and replay", INTRO_CHANGE_POSITION)
                                 .addSpotlight(startSequence, "Start sequence", "Well.. you just clicked here", INTRO_SEQUENCE)
                                 .addSpotlight(fab,"Love", "Like the picture?\n" + "Let others know.", INTRO_CARD)
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .enableDismissAfterShown(true)
                 .usageId(usageId) //UNIQUE ID
                 //.subHeadingDrawable(testDrawable)
+                .setCircleViewMode(SpotlightView.CircleViewMode.Rectangle)
                 .show();
     }
 }

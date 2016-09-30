@@ -40,6 +40,7 @@ import android.widget.TextView;
 import com.wooplr.spotlight.prefs.PreferencesManager;
 import com.wooplr.spotlight.shape.Circle;
 import com.wooplr.spotlight.shape.NormalLineAnimDrawable;
+import com.wooplr.spotlight.shape.Rectangle;
 import com.wooplr.spotlight.target.AnimPoint;
 import com.wooplr.spotlight.target.SmallCircleViewTarget;
 import com.wooplr.spotlight.target.Target;
@@ -56,10 +57,16 @@ import java.util.List;
 
 public class SpotlightView extends FrameLayout {
 
+    public enum CircleViewMode{
+        Circle,
+        Rectangle
+    }
+
     public enum TargetMode{
         HorizontalLeader,
         SmallCenter,
-        Normal
+        Normal,
+        NormalRectangle
     }
 
     /**
@@ -955,6 +962,7 @@ public class SpotlightView extends FrameLayout {
             this.lineAnimationDuration = configuration.getLineAnimationDuration();
             this.lineStroke = configuration.getLineStroke();
             this.lineAndArcColor = configuration.getLineAndArcColor();
+
         }
     }
 
@@ -967,6 +975,7 @@ public class SpotlightView extends FrameLayout {
 
         private Activity activity;
 
+        private CircleViewMode circleViewMode = CircleViewMode.Circle;
 
         public Builder(Activity activity) {
             this.activity = activity;
@@ -994,7 +1003,12 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
         public Builder target(View view, TargetMode mode) {
-            spotlightView.setTargetView(new SmallCircleViewTarget(view, mode));
+            if(mode==TargetMode.NormalRectangle){
+                setCircleViewMode(CircleViewMode.Rectangle);
+                spotlightView.setTargetView(new SmallCircleViewTarget(view, TargetMode.Normal));
+            } else {
+                spotlightView.setTargetView(new SmallCircleViewTarget(view, mode));
+            }
             return this;
         }
 
@@ -1113,13 +1127,27 @@ public class SpotlightView extends FrameLayout {
 
         public Builder setConfiguration(SpotlightConfig configuration) {
             spotlightView.setConfiguration(configuration);
+            this.setCircleViewMode(configuration.getCircleViewMode());
+            return this;
+        }
+
+        public Builder setCircleViewMode(CircleViewMode circleViewMode){
+            this.circleViewMode = circleViewMode;
             return this;
         }
 
         public SpotlightView build() {
-            Circle circle = new Circle(
-                    spotlightView.targetView,
-                    spotlightView.padding);
+            Circle circle = null;
+            switch(this.circleViewMode){
+                case Rectangle:
+                    circle = new Rectangle(spotlightView.targetView, spotlightView.padding);
+                    break;
+                default:
+                     circle = new Circle(
+                            spotlightView.targetView,
+                            spotlightView.padding);
+                    break;
+            }
             spotlightView.setCircleShape(circle);
             if (spotlightView.dismissOnBackPress) {
                 spotlightView.enableDismissOnBackPress();

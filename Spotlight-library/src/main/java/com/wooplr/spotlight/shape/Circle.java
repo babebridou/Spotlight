@@ -12,10 +12,10 @@ import com.wooplr.spotlight.target.Target;
 
 public class Circle {
 
-    private Target target;
+    protected Target target;
     private int radius;
-    private Point circlePoint;
-    private int padding = 20;
+    protected Point circlePoint;
+    protected int padding = 20;
 
 
     public Circle(Target target, int padding) {

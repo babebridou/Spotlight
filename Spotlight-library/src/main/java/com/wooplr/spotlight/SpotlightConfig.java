@@ -29,6 +29,7 @@ public class SpotlightConfig {
     private int lineAndArcColor;
     private boolean showTargetArc;
     private Typeface typeface;
+    private SpotlightView.CircleViewMode circleViewMode;
 
     public SpotlightConfig() {
         this.maskColor = 0x70000000;
@@ -49,6 +50,7 @@ public class SpotlightConfig {
         this.lineStroke = Utils.dpToPx(4);
         this.lineAndArcColor = Color.parseColor("#eb273f");
         this.showTargetArc = true;
+        this.circleViewMode = SpotlightView.CircleViewMode.Circle;
     }
 
     public int getMaskColor() {
@@ -201,5 +203,11 @@ public class SpotlightConfig {
 
     public void setDismissOnBackpress(boolean dismissOnBackpress) {
         this.dismissOnBackpress = dismissOnBackpress;
+    }
+    public void setCircleViewMode(SpotlightView.CircleViewMode circleViewMode){
+        this.circleViewMode = circleViewMode;
+    }
+    public SpotlightView.CircleViewMode getCircleViewMode(){
+        return this.circleViewMode;
     }
 }
